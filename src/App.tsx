@@ -5,7 +5,7 @@ function App() {
     <>
       <div className="container mx-auto">
         <header className="p-6">
-          <nav className="sticky inset-0 p-4 border-b-1">
+          <nav className="sticky inset-0 p-4 border-b border-green-900">
             <ul className="flex justify-end md:flex-row flex-col space-x-6">
               <li>
                 <a href="#home">&gt; Home</a>
