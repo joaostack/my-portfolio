@@ -26,7 +26,7 @@ function App() {
           </nav>
         </header>
 
-        <section className="max-w-6xl px-6 py-16">
+        <section id="home" className="max-w-6xl px-6 py-16">
           <h1 className="text-shadow-[0_0_10px_rgba(34,197,94,0.5)] text-5xl lg:text-9xl md:text-7xl font-black mb-4">
             JOAOSTACK
           </h1>
@@ -40,7 +40,7 @@ function App() {
           </p>
         </section>
 
-        <section className="max-w-6xl px-6 py-16">
+        <section id="sobre" className="max-w-6xl px-6 py-16">
           <h2 className="mb-10 border-l-4 border-green-500 pl-4 uppercase">
             Sobre
           </h2>
@@ -68,7 +68,7 @@ function App() {
           </p>
         </section>
 
-        <section className="max-w-6xl px-6 py-16">
+        <section id="projetos" className="max-w-6xl px-6 py-16">
           <h2 className="mb-10 border-l-4 border-green-500 pl-4 uppercase">
             Projetos
           </h2>
@@ -187,7 +187,7 @@ function App() {
           </div>
         </section>
 
-        <section className="max-w-6xl px-6 py-16">
+        <section id="links" className="max-w-6xl px-6 py-16">
           <h2 className="mb-10 border-l-4 border-green-500 pl-4 uppercase">
             Links
           </h2>
