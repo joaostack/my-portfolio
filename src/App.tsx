@@ -1,33 +1,51 @@
 import "./App.css";
+import { React, useEffect } from "react";
+import { animate, splitText } from "animejs";
 
 function App() {
+  useEffect(() => {
+    const { chars } = splitText(".container", { words: false, chars: true });
+    animate(chars, {
+      opacity: [0, 1],
+      duration: 1000,
+      loop: false,
+      easing: "easeOutExpo",
+    });
+  }, []);
+
   return (
     <>
       <div className="container mx-auto">
         <header className="p-6">
-          <nav className="sticky inset-0 p-4 border-b border-green-900">
-            <ul className="flex justify-end md:flex-row flex-col space-x-6">
+          <nav className="sticky inset-0 p-4 border-b border-green-900 flex flex-col md:flex-row lg:flex-row justify-between">
+            <p className="font-bold italic text-green-500 animate-pulse">
+              [Embrace the Computer Science]
+            </p>
+
+            <ul className="flex md:flex-row flex-col space-x-6">
               <li>
-                <a href="#home">&gt; Home</a>
+                <a className="hover:text-white" href="#home">&gt; Home</a>
               </li>
               <li>
-                <a href="#sobre">&gt; Sobre</a>
+                <a className="hover:text-white" href="#sobre">&gt; Sobre</a>
               </li>
               <li>
-                <a href="#projetos">&gt; Projetos</a>
+                <a className="hover:text-white" href="#projetos">
+                  &gt; Projetos
+                </a>
               </li>
               <li>
-                <a href="#links">&gt; Links</a>
+                <a className="hover:text-white" href="#links">&gt; Links</a>
               </li>
               <li>
-                <a href="#contato">&gt; Contato</a>
+                <a className="hover:text-white" href="#contato">&gt; Contato</a>
               </li>
             </ul>
           </nav>
         </header>
 
         <section id="home" className="max-w-6xl px-6 py-16">
-          <h1 className="text-shadow-[0_0_10px_rgba(34,197,94,0.5)] text-5xl lg:text-9xl md:text-7xl font-black mb-4">
+          <h1 className="title text-shadow-[0_0_10px_rgba(34,197,94,0.5)] text-5xl lg:text-9xl md:text-7xl font-black mb-4">
             JOAOSTACK
           </h1>
           CyberSecurity & Development
@@ -194,21 +212,33 @@ function App() {
           <p className="text-green-600">
             <p>
               Papers:
-              <a href="https://joaostack.github.io/" target="_blank">
+              <a
+                href="https://joaostack.github.io/"
+                target="_blank"
+                className="ml-2 italic underline text-blue-500"
+              >
                 joaostack.github.io
               </a>
             </p>
 
             <p>
               GitHub:
-              <a href="https://github.com/joaostack" target="_blank">
+              <a
+                href="https://github.com/joaostack"
+                target="_blank"
+                className="ml-2 italic underline text-blue-500"
+              >
                 github.com/joaostack
               </a>
             </p>
 
             <p>
               TryHackMe:
-              <a href="https://tryhackme.com/p/joaostack" target="_blank">
+              <a
+                href="https://tryhackme.com/p/joaostack"
+                target="_blank"
+                className="ml-2 italic underline text-blue-500"
+              >
                 tryhackme.com/p/joaostack
               </a>
             </p>
