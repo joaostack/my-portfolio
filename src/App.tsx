@@ -4,11 +4,19 @@ import { animate } from "animejs";
 
 function App() {
   useEffect(() => {
+    // animação carregbamento do site
     animate(".container", {
       opacity: [0, 1],
       duration: 1000,
       loop: false,
-      easing: "easeOutExpo",
+      easing: "easeInOut",
+    });
+
+    animate(".title", {
+      y: ["100%", "0%"],
+      duration: 1250,
+      ease: "out(3)",
+      loop: false,
     });
   }, []);
 
