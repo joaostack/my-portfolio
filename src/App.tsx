@@ -4,8 +4,7 @@ import { animate, splitText } from "animejs";
 
 function App() {
   useEffect(() => {
-    const { chars } = splitText(".container", { words: false, chars: true });
-    animate(chars, {
+    animate(".container", {
       opacity: [0, 1],
       duration: 1000,
       loop: false,
