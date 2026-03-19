@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect } from "react";
-import { animate, splitText } from "animejs";
+import { animate } from "animejs";
 
 function App() {
   useEffect(() => {
