@@ -83,12 +83,11 @@ function App() {
             foco é destinado a:
 
             <ul className="list-disc list-inside">
-              <li>CyberSecurity (Pentesting / Cyber Threat Intelligence)</li>
+              <li>CyberSecurity</li>
               <li>Redes de Computadores</li>
-              <li>Desenvolvimento Backend / Web</li>
-              <li>Sistemas Linux / Bash Scripting</li>
-              <li>Fundamentos de Ciência da Computação</li>
-              <li>Algoritmos / Estrutura de Dados</li>
+              <li>Desenvolvimento Back-End</li>
+              <li>Sistemas Linux</li>
+              <li>Fundamentos de Ciência da Computação (Algoritmos e Estrutura de Dados)</li>
             </ul>
           </p>
         </section>
