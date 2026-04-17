@@ -93,7 +93,7 @@ function App() {
           </p>
         </section>
 
-        <section id="projetos" className="max-w-6xl px-6 py-16">
+        <section id="projetos" className="max-w-12xl px-6 py-16">
           <h2 className="mb-10 border-l-4 border-green-500 pl-4 uppercase">
             Projetos
           </h2>
