@@ -23,8 +23,8 @@ function App() {
   return (
     <>
       <div className="container mx-auto">
-        <header className="p-6">
-          <nav className="sticky inset-0 p-4 border-b border-green-900 flex flex-col md:flex-row lg:flex-row justify-between">
+        <header className="bg-black p-6 sticky top-0 z-50">
+          <nav className="p-4 border-b border-green-900 flex flex-col md:flex-row lg:flex-row justify-between">
             <p className="font-bold italic text-green-500 animate-pulse">
               [Embrace the Computer Science]
             </p>
