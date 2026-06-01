@@ -87,7 +87,7 @@ function App() {
               <li>Redes de Computadores</li>
               <li>Desenvolvimento Back-End</li>
               <li>Sistemas Linux</li>
-              <li>Fundamentos de Ciência da Computação (Algoritmos e Estrutura de Dados)</li>
+              <li>Fundamentos de Ciência da Computação</li>
             </ul>
           </p>
         </section>
