@@ -100,7 +100,7 @@ function App() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
               <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">PROJETO</span>
+                <span className="text-xs text-green-700">C#</span>
                 <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
               </div>
               <h3 className="text-lg text-green-200 mb-2">InstaMailChecker</h3>
@@ -122,7 +122,7 @@ function App() {
 
             <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
               <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">PROJETO</span>
+                <span className="text-xs text-green-700">C#</span>
                 <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
               </div>
               <h3 className="text-lg text-green-200 mb-2">DllProccessLoader</h3>
@@ -144,7 +144,7 @@ function App() {
 
             <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
               <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">PROJETO</span>
+                <span className="text-xs text-green-700">C#</span>
                 <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
               </div>
               <h3 className="text-lg text-green-200 mb-2">ArpPoison</h3>
@@ -166,7 +166,7 @@ function App() {
 
             <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
               <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">PROJETO</span>
+                <span className="text-xs text-green-700">C#</span>
                 <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
               </div>
               <h3 className="text-lg text-green-200 mb-2">SynPorScan</h3>
@@ -189,7 +189,7 @@ function App() {
 
             <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
               <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">PROJETO</span>
+                <span className="text-xs text-green-700">C#</span>
                 <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
               </div>
               <h3 className="text-lg text-green-200 mb-2">FileDownloader</h3>
@@ -211,7 +211,7 @@ function App() {
 
             <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
               <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">PROJETO</span>
+                <span className="text-xs text-green-700">C#</span>
                 <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
               </div>
             
