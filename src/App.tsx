@@ -209,6 +209,32 @@ function App() {
               </div>
             </div>
           </div>
+
+          <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
+            <div className="flex justify-between mb-4">
+              <span className="text-xs text-green-700">PROJETO</span>
+              <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
+            </div>
+          
+            <h3 className="text-lg text-green-200 mb-2">OrchestraDev</h3>
+          
+            <p className="text-sm text-green-600 mb-3">
+              API de orquestração de containers Docker desenvolvida em C#.
+              Permite criar, iniciar, parar e remover servidores utilizando
+              containers Docker através de endpoints HTTP + Clean Architecture.
+            </p>
+          
+            <div className="flex gap-2 text-[15px]">
+              <span className="border border-green-800 px-1">
+                <a
+                  target="_blank"
+                  href="https://github.com/joaostack/OrchestraDev"
+                >
+                  GITHUB
+                </a>
+              </span>
+            </div>
+          </div>
         </section>
 
         <section id="links" className="max-w-6xl px-6 py-16">
