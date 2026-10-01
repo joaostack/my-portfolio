@@ -1,298 +1,329 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { animate } from "animejs";
 
+type Theme = "light" | "dark";
+
 function App() {
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem("theme");
+
+    if (saved === "light" || saved === "dark") {
+      return saved;
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
+
   useEffect(() => {
-    // animação carregbamento do site
-    animate(".container", {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    animate(".page", {
       opacity: [0, 1],
-      duration: 1000,
-      loop: false,
-      easing: "easeInOut",
+      translateY: [20, 0],
+      duration: 800,
+      easing: "easeOutCubic",
     });
 
-    animate(".title", {
-      y: ["100%", "0%"],
-      duration: 1250,
-      ease: "out(3)",
-      loop: false,
+    animate(".hero-title", {
+      opacity: [0, 1],
+      translateY: [30, 0],
+      duration: 1000,
+      delay: 150,
+      easing: "easeOutCubic",
+    });
+
+    animate(".hero-description", {
+      opacity: [0, 1],
+      translateY: [20, 0],
+      duration: 800,
+      delay: 350,
+      easing: "easeOutCubic",
+    });
+
+    animate(".project-card", {
+      opacity: [0, 1],
+      translateY: [20, 0],
+      duration: 700,
+      delay: (_el, i) => 450 + i * 80,
+      easing: "easeOutCubic",
     });
   }, []);
 
+  const toggleTheme = () => {
+    setTheme((current) => (current === "dark" ? "light" : "dark"));
+  };
+
   return (
-    <>
-      <div className="container mx-auto">
-        <header className="bg-black p-6 sticky top-0 z-50">
-          <nav className="p-4 border-b border-green-900 flex flex-col md:flex-row lg:flex-row justify-between">
-            <p className="font-bold italic text-yellow-500 animate-pulse">
-              [Embrace the Computer Science]
-            </p>
+    <div className="page">
+      <header className="navbar">
+        <div className="nav-inner">
+          <a href="#home" className="brand">
+            <span className="brand-mark">J</span>
+            <span>joaostack</span>
+          </a>
 
-            <ul className="flex md:flex-row flex-col space-x-6">
-              <li>
-                <a className="hover:text-white" href="#home">&gt; Home</a>
-              </li>
-              <li>
-                <a className="hover:text-white" href="#sobre">&gt; Sobre</a>
-              </li>
-              <li>
-                <a className="hover:text-white" href="#projetos">
-                  &gt; Projetos
-                </a>
-              </li>
-              <li>
-                <a className="hover:text-white" href="#links">&gt; Links</a>
-              </li>
-              <li>
-                <a className="hover:text-white" href="#contato">&gt; Contato</a>
-              </li>
-            </ul>
+          <nav className="nav-links">
+            <a href="#sobre">Sobre</a>
+            <a href="#projetos">Projetos</a>
+            <a href="#links">Links</a>
+            <a href="#contato">Contato</a>
           </nav>
-        </header>
 
-        <section id="home" className="max-w-6xl px-6 py-16">
-          <h1 className="title text-shadow-[0_0_10px_rgba(34,197,94,0.5)] text-5xl lg:text-9xl md:text-7xl font-black mb-4">
-            JOAOSTACK
-          </h1>
-          CyberSecurity & Development
+          <button
+            className="theme-button"
+            onClick={toggleTheme}
+            aria-label="Alternar tema"
+          >
+            {theme === "dark" ? "☼" : "☾"}
+          </button>
+        </div>
+      </header>
 
-          <p className="text-green-600 mt-2 font-bold">
-            root@joaostack:~# ./status.sh
-            <p className="animate-pulse">
-              Status: Online
+      <main>
+        <section id="home" className="hero">
+          <div className="hero-content">
+            <div className="eyebrow">
+              <span className="status-dot" />
+              Software · Systems · Security
+            </div>
+
+            <h1 className="hero-title">
+              João
+              <br />
+              <span>Henryque.</span>
+            </h1>
+
+            <p className="hero-description">
+              Estudante autodidata de Ciência da Computação interessado em
+              desenvolvimento de software, sistemas, redes e segurança.
             </p>
-          </p>
+
+            <div className="hero-actions">
+              <a href="#projetos" className="button button-primary">
+                Ver projetos
+                <span>↗</span>
+              </a>
+
+              <a href="#sobre" className="button button-secondary">
+                Sobre mim
+              </a>
+            </div>
+          </div>
+
+          <div className="hero-side">
+            <div className="hero-line" />
+
+            <span>
+              Building to understand
+              <br />
+              how things work.
+            </span>
+          </div>
         </section>
 
-        <section id="sobre" className="max-w-6xl px-6 py-16">
-          <h2 className="mb-10 border-l-4 border-green-500 pl-4 uppercase">
-            Sobre
-          </h2>
-          <p className="text-green-600">
-            Comecei a mexer com hacking e programação por volta dos 12 anos e
-            durante todo esse tempo tive contato com diversas linguagens e
-            tecnologias. Desde então fico explorando sistemas, participando de
-            CTFs, estudando segurança e criando alguns projetos.
-          </p>
+        <section id="sobre" className="section about-section">
+          <div className="section-label">01 / SOBRE</div>
 
-          <br />
+          <div className="section-content">
+            <h2>
+              Curiosidade primeiro.
+              <br />
+              Abstrações depois.
+            </h2>
 
-          <p className="text-green-600">
-            Tenho um amplo interesse em vários âmbitos da tecnologia, mas meu
-            foco é destinado a:
-
-            <ul className="list-disc list-inside">
-              <li>CyberSecurity</li>
-              <li>Redes de Computadores</li>
-              <li>Desenvolvimento Back-End</li>
-              <li>Sistemas Linux</li>
-              <li>Fundamentos de Ciência da Computação</li>
-            </ul>
-          </p>
-        </section>
-
-        <section id="projetos" className="max-w-12xl px-6 py-16">
-          <h2 className="mb-10 border-l-4 border-green-500 pl-4 uppercase">
-            Projetos
-          </h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
-              <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">C#</span>
-                <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
-              </div>
-              <h3 className="text-lg text-green-200 mb-2">InstaMailChecker</h3>
-              <p className="text-sm text-green-600 mb-3">
-                Uma ferramenta de OSINT que verifica se tal e-mail especificado
-                está cadastrado no Instagram.
+            <div className="about-text">
+              <p>
+                Comecei a mexer com hacking e programação por volta dos 12 anos
+                e durante todo esse tempo tive contato com diversas linguagens
+                e tecnologias.
               </p>
-              <div className="flex gap-2 text-[15px]">
-                <span className="border border-green-800 px-1">
-                  <a
-                    target="_blank"
-                    href="https://github.com/joaostack/InstaMailChecker"
-                  >
-                    GITHUB
-                  </a>
-                </span>
-              </div>
-            </div>
 
-            <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
-              <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">C#</span>
-                <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
-              </div>
-              <h3 className="text-lg text-green-200 mb-2">DllProccessLoader</h3>
-              <p className="text-sm text-green-600 mb-3">
-                Injetor de DLL em processos. Desenvolvido como foco em estudos
-                de segurança cibernética.
+              <p>
+                Desde então fico explorando sistemas, participando de CTFs,
+                estudando segurança e criando projetos para entender melhor
+                como as coisas funcionam.
               </p>
-              <div className="flex gap-2 text-[15px]">
-                <span className="border border-green-800 px-1">
-                  <a
-                    target="_blank"
-                    href="https://github.com/joaostack/DllProccessLoader"
-                  >
-                    GITHUB
-                  </a>
-                </span>
-              </div>
-            </div>
 
-            <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
-              <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">C#</span>
-                <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
-              </div>
-              <h3 className="text-lg text-green-200 mb-2">ArpPoison</h3>
-              <p className="text-sm text-green-600 mb-3">
-                Ferramenta de envenenamento da tabela ARP. Desenvolvi para
-                aplicar meus conhecimentos em redes de computadores.
+              <p>
+                Atualmente meus principais interesses são:
               </p>
-              <div className="flex gap-2 text-[15px]">
-                <span className="border border-green-800 px-1">
-                  <a
-                    target="_blank"
-                    href="https://github.com/joaostack/ArpPoison"
-                  >
-                    GITHUB
-                  </a>
-                </span>
-              </div>
-            </div>
 
-            <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
-              <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">C#</span>
-                <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
-              </div>
-              <h3 className="text-lg text-green-200 mb-2">SynPorScan</h3>
-              <p className="text-sm text-green-600 mb-3">
-                Ferramenta de descoberta de portas abertas (baseada em
-                half-scan). Projeto desenvolvido para aplicar meus conhecimentos
-                de redes de computadores.
-              </p>
-              <div className="flex gap-2 text-[15px]">
-                <span className="border border-green-800 px-1">
-                  <a
-                    target="_blank"
-                    href="https://github.com/joaostack/SynPortScan"
-                  >
-                    GITHUB
-                  </a>
-                </span>
-              </div>
-            </div>
-
-            <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
-              <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">C#</span>
-                <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
-              </div>
-              <h3 className="text-lg text-green-200 mb-2">FileDownloader</h3>
-              <p className="text-sm text-green-600 mb-3">
-                Downloader de arquivos simples desenvolvido em C# com uma
-                interface de terminal bonita.
-              </p>
-              <div className="flex gap-2 text-[15px]">
-                <span className="border border-green-800 px-1">
-                  <a
-                    target="_blank"
-                    href="https://github.com/joaostack/FileDownloader"
-                  >
-                    GITHUB
-                  </a>
-                </span>
-              </div>
-            </div>
-
-            <div className="section-card border border-green-900 p-6 bg-green-950/10 hover:bg-green-500/10 transition group">
-              <div className="flex justify-between mb-4">
-                <span className="text-xs text-green-700">C#</span>
-                <span className="w-2 h-2 bg-green-500 rounded-full group-hover:animate-ping" />
-              </div>
-            
-              <h3 className="text-lg text-green-200 mb-2">OrchestraDev</h3>
-            
-              <p className="text-sm text-green-600 mb-3">
-                API de orquestração de containers Docker desenvolvida em C#.
-                Permite criar, iniciar, parar e remover servidores utilizando
-                containers Docker através de endpoints HTTP + Clean Architecture.
-              </p>
-            
-              <div className="flex gap-2 text-[15px]">
-                <span className="border border-green-800 px-1">
-                  <a
-                    target="_blank"
-                    href="https://github.com/joaostack/OrchestraDev"
-                  >
-                    GITHUB
-                  </a>
-                </span>
-              </div>
+              <ul>
+                <li>CyberSecurity</li>
+                <li>Redes de Computadores</li>
+                <li>Desenvolvimento Back-End</li>
+                <li>Sistemas Linux</li>
+                <li>Fundamentos de Ciência da Computação</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        <section id="links" className="max-w-6xl px-6 py-16">
-          <h2 className="mb-10 border-l-4 border-green-500 pl-4 uppercase">
-            Links
-          </h2>
-          <p className="text-green-600">
-            <p>
-              Papers:
+        <section id="projetos" className="section projects-section">
+          <div className="section-label">02 / PROJETOS</div>
+
+          <div className="section-content">
+            <div className="projects-header">
+              <h2>Coisas que construí.</h2>
+
+              <span className="project-count">06 projetos</span>
+            </div>
+
+            <div className="projects-grid">
+              <ProjectCard
+                number="01"
+                language="C#"
+                title="InstaMailChecker"
+                description="Uma ferramenta de OSINT que verifica se um e-mail especificado está cadastrado no Instagram."
+                href="https://github.com/joaostack/InstaMailChecker"
+              />
+
+              <ProjectCard
+                number="02"
+                language="C#"
+                title="DllProccessLoader"
+                description="Injetor de DLL em processos. Desenvolvido com foco em estudos de segurança cibernética."
+                href="https://github.com/joaostack/DllProccessLoader"
+              />
+
+              <ProjectCard
+                number="03"
+                language="C#"
+                title="ArpPoison"
+                description="Ferramenta de envenenamento da tabela ARP desenvolvida para aplicar conhecimentos de redes."
+                href="https://github.com/joaostack/ArpPoison"
+              />
+
+              <ProjectCard
+                number="04"
+                language="C#"
+                title="SynPortScan"
+                description="Ferramenta de descoberta de portas abertas baseada em half-scan."
+                href="https://github.com/joaostack/SynPortScan"
+              />
+
+              <ProjectCard
+                number="05"
+                language="C#"
+                title="FileDownloader"
+                description="Downloader de arquivos simples desenvolvido em C# com uma interface de terminal."
+                href="https://github.com/joaostack/FileDownloader"
+              />
+
+              <ProjectCard
+                number="06"
+                language="C#"
+                title="OrchestraDev"
+                description="API de orquestração de containers Docker desenvolvida em C# usando HTTP e Clean Architecture."
+                href="https://github.com/joaostack/OrchestraDev"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section id="links" className="section links-section">
+          <div className="section-label">03 / LINKS</div>
+
+          <div className="section-content">
+            <h2>Encontre-me.</h2>
+
+            <div className="links-list">
               <a
                 href="https://joaostack.github.io/"
                 target="_blank"
-                className="ml-2 italic underline text-blue-500"
+                rel="noreferrer"
               >
-                joaostack.github.io
+                <span>Papers</span>
+                <span>joaostack.github.io ↗</span>
               </a>
-            </p>
 
-            <p>
-              GitHub:
               <a
                 href="https://github.com/joaostack"
                 target="_blank"
-                className="ml-2 italic underline text-blue-500"
+                rel="noreferrer"
               >
-                github.com/joaostack
+                <span>GitHub</span>
+                <span>github.com/joaostack ↗</span>
               </a>
-            </p>
 
-            <p>
-              TryHackMe:
               <a
                 href="https://tryhackme.com/p/joaostack"
                 target="_blank"
-                className="ml-2 italic underline text-blue-500"
+                rel="noreferrer"
               >
-                tryhackme.com/p/joaostack
+                <span>TryHackMe</span>
+                <span>tryhackme.com/p/joaostack ↗</span>
               </a>
-            </p>
-          </p>
+            </div>
+          </div>
         </section>
+      </main>
 
-        <footer
-          id="contato"
-          className="text-center py-20 border-t border-green-900"
+      <footer id="contato" className="footer">
+        <div>
+          <span className="footer-label">GET IN TOUCH</span>
+
+          <h2>
+            Let's build
+            <br />
+            something.
+          </h2>
+        </div>
+
+        <a
+          href="mailto:joaohcontato@proton.me"
+          className="footer-email"
         >
-          <p className="text-green-700 mb-4 tracking-widest animate-pulse uppercase">
-            End Transmission
-          </p>
-          <a
-            href="mailto:joaohcontato@proton.me"
-            className="border border-green-500 px-6 py-2 hover:bg-green-500 hover:text-black transition"
-          >
-            Contato
-          </a>
-        </footer>
+          joaohcontato@proton.me
+          <span>↗</span>
+        </a>
+
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} João Henryque</span>
+          <span>Computer Science · Software · Systems</span>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+function ProjectCard({
+  number,
+  language,
+  title,
+  description,
+  href,
+}: {
+  number: string;
+  language: string;
+  title: string;
+  description: string;
+  href: string;
+}) {
+  return (
+    <article className="project-card">
+      <div className="project-top">
+        <span>{number}</span>
+        <span>{language}</span>
       </div>
-    </>
+
+      <div className="project-body">
+        <h3>{title}</h3>
+
+        <p>{description}</p>
+
+        <a href={href} target="_blank" rel="noreferrer">
+          View repository
+          <span>↗</span>
+        </a>
+      </div>
+    </article>
   );
 }
 
