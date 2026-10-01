@@ -102,8 +102,7 @@ function Home() {
       opacity: [0, 1],
       translateY: [20, 0],
       duration: 700,
-      delay: (_el: HTMLElement, index: number) =>
-        450 + index * 80,
+      delay: (_el, index) => 450 + index * 80,
       easing: "easeOutCubic",
     });
 
@@ -111,8 +110,7 @@ function Home() {
       opacity: [0, 1],
       translateY: [20, 0],
       duration: 700,
-      delay: (_el: HTMLElement, index: number) =>
-        500 + index * 80,
+      delay: (_el, index) => 500 + index * 80,
       easing: "easeOutCubic",
     });
   }, []);
@@ -389,10 +387,7 @@ function PostPage() {
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
-                a: ({
-                  href,
-                  children,
-                }) => (
+                a: ({ href, children }) => (
                   <a
                     href={href}
                     target="_blank"
