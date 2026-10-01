@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export type Post = {
   slug: string;
   title: string;
