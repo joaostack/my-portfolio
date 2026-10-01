@@ -1,60 +1,19 @@
-import "./App.css";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 import { animate } from "animejs";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import {
+  Link,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+
+import { getPostBySlug, posts, type Post } from "./lib/posts";
 
 type Theme = "light" | "dark";
-
-type Post = {
-  slug: string;
-  date: string;
-  category: string;
-  title: string;
-  description: string;
-  content: ReactNode;
-};
-
-type PostCardProps = {
-  post: Post;
-  onOpen: () => void;
-};
-
-import ExploitingUnisocRedmiA5 from "./posts/ExploitingUnisocRedmiA5";
-import WindowsDotNetEnvironment from "./posts/WindowsDotNetEnvironment";
-
-/*
-|--------------------------------------------------------------------------
-| POSTS
-|--------------------------------------------------------------------------
-|
-| Para adicionar um novo post:
-|
-| 1. Crie um arquivo em src/posts/
-| 2. Importe o componente aqui
-| 3. Adicione um objeto nesta lista
-|
-*/
-
-const posts: Post[] = [
-  {
-    slug: "exploiting-unisoc-redmi-a5",
-    date: "06.02.2026",
-    category: "SECURITY",
-    title: "Exploiting Unisoc Redmi A5",
-    description:
-      "Pesquisa sobre o Redmi A5, Unisoc T7250, CVE-2022-38694 e o processo de desbloqueio do bootloader.",
-    content: <ExploitingUnisocRedmiA5 />,
-  },
-
-  {
-    slug: "windows-dotnet-environment",
-    date: "06.02.2026",
-    category: "WINDOWS · C#",
-    title: "Configuração do meu Windows voltado para o desenvolvimento DotNET/C#",
-    description:
-      "Minha configuração de ambiente para desenvolvimento com .NET e C#, utilizando PowerShell, Windows Terminal, Starship e NeoVim.",
-    content: <WindowsDotNetEnvironment />,
-  },
-];
 
 function App() {
   const [theme, setTheme] = useState<Theme>(() => {
@@ -69,35 +28,128 @@ function App() {
       : "light";
   });
 
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  return (
+    <Routes>
+      <Route
+        path="*"
+        element={
+          <Site
+            theme={theme}
+            setTheme={setTheme}
+          />
+        }
+      />
+    </Routes>
+  );
+}
+
+function Site({
+  theme,
+  setTheme,
+}: {
+  theme: Theme;
+  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
+}) {
+  const location = useLocation();
+
   useEffect(() => {
-    if (selectedPost) {
-      window.scrollTo({
-        top: 0,
-        behavior: "instant",
-      });
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
-      return;
-    }
+  const toggleTheme = () => {
+    setTheme((current) =>
+      current === "dark" ? "light" : "dark"
+    );
+  };
 
-    animate(".page", {
-      opacity: [0, 1],
-      translateY: [20, 0],
-      duration: 800,
-      easing: "easeOutCubic",
-    });
+  return (
+    <div className="page">
+      <Navbar
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
+
+        <Route
+          path="/posts/:slug"
+          element={<PostPage />}
+        />
+
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+      </Routes>
+    </div>
+  );
+}
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+function Navbar({
+  theme,
+  onToggleTheme,
+}: {
+  theme: Theme;
+  onToggleTheme: () => void;
+}) {
+  const navigate = useNavigate();
+
+  return (
+    <header className="navbar">
+      <div className="nav-inner">
+        <Link
+          to="/"
+          className="brand"
+        >
+          <span className="brand-mark">J</span>
+          <span>joaostack</span>
+        </Link>
+
+        <nav className="nav-links">
+          <a href="/#sobre">Sobre</a>
+          <a href="/#projetos">Projetos</a>
+          <a href="/#posts">Posts</a>
+          <a href="/#links">Links</a>
+          <a href="/#contato">Contato</a>
+        </nav>
+
+        <div className="nav-actions">
+          <button
+            className="theme-button"
+            onClick={onToggleTheme}
+            aria-label="Alternar tema"
+          >
+            {theme === "dark" ? "☼" : "☾"}
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function Home() {
+  useEffect(() => {
     animate(".hero-title", {
       opacity: [0, 1],
       translateY: [30, 0],
-      duration: 1000,
-      delay: 150,
+      duration: 900,
       easing: "easeOutCubic",
     });
 
@@ -105,150 +157,48 @@ function App() {
       opacity: [0, 1],
       translateY: [20, 0],
       duration: 800,
-      delay: 350,
+      delay: 150,
+      easing: "easeOutCubic",
+    });
+
+    animate(".hero-actions", {
+      opacity: [0, 1],
+      translateY: [15, 0],
+      duration: 700,
+      delay: 300,
       easing: "easeOutCubic",
     });
 
     animate(".project-card", {
       opacity: [0, 1],
       translateY: [20, 0],
-      duration: 700,
-      delay: (_el, i) => 450 + i * 80,
+      duration: 650,
+      delay: (_el, index) => 400 + index * 70,
       easing: "easeOutCubic",
     });
 
     animate(".post-card", {
       opacity: [0, 1],
       translateY: [20, 0],
-      duration: 700,
-      delay: (_el, i) => 650 + i * 100,
+      duration: 650,
+      delay: (_el, index) => 500 + index * 80,
       easing: "easeOutCubic",
     });
-  }, [selectedPost]);
-
-  const toggleTheme = () => {
-    setTheme((current) => (current === "dark" ? "light" : "dark"));
-  };
-
-  const openPost = (post: Post) => {
-    setSelectedPost(post);
-  };
-
-  const closePost = () => {
-    setSelectedPost(null);
-
-    setTimeout(() => {
-      document
-        .getElementById("posts")
-        ?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
-  };
-
-  if (selectedPost) {
-    return (
-      <div className="page">
-        <header className="navbar">
-          <div className="nav-inner">
-            <button className="brand" onClick={closePost}>
-              <span className="brand-mark">J</span>
-              <span>joaostack</span>
-            </button>
-
-            <div className="post-navbar-actions">
-              <button
-                className="theme-button"
-                onClick={toggleTheme}
-                aria-label="Alternar tema"
-              >
-                {theme === "dark" ? "☼" : "☾"}
-              </button>
-            </div>
-          </div>
-        </header>
-
-        <main className="post-page">
-          <div className="post-page-inner">
-            <button className="post-back" onClick={closePost}>
-              <span>←</span>
-              Voltar para os posts
-            </button>
-
-            <header className="post-page-header">
-              <div className="post-page-meta">
-                <span>{selectedPost.date}</span>
-                <span>{selectedPost.category}</span>
-              </div>
-
-              <h1>{selectedPost.title}</h1>
-
-              <p>{selectedPost.description}</p>
-            </header>
-
-            <div className="post-article">
-              {selectedPost.content}
-            </div>
-
-            <div className="post-end">
-              <button className="post-back" onClick={closePost}>
-                <span>←</span>
-                Voltar para os posts
-              </button>
-            </div>
-          </div>
-        </main>
-
-        <footer className="footer">
-          <div>
-            <span className="footer-label">JOAOSTACK</span>
-
-            <h2>
-              Building to
-              <br />
-              understand.
-            </h2>
-          </div>
-
-          <div className="footer-bottom">
-            <span>© {new Date().getFullYear()} João Henryque</span>
-            <span>Computer Science · Software · Systems</span>
-          </div>
-        </footer>
-      </div>
-    );
-  }
+  }, []);
 
   return (
-    <div className="page">
-      <header className="navbar">
-        <div className="nav-inner">
-          <a href="#home" className="brand">
-            <span className="brand-mark">J</span>
-            <span>joaostack</span>
-          </a>
-
-          <nav className="nav-links">
-            <a href="#sobre">Sobre</a>
-            <a href="#projetos">Projetos</a>
-            <a href="#posts">Posts</a>
-            <a href="#links">Links</a>
-            <a href="#contato">Contato</a>
-          </nav>
-
-          <button
-            className="theme-button"
-            onClick={toggleTheme}
-            aria-label="Alternar tema"
-          >
-            {theme === "dark" ? "☼" : "☾"}
-          </button>
-        </div>
-      </header>
-
+    <>
       <main>
-        <section id="home" className="hero">
+        {/* HERO */}
+
+        <section
+          id="home"
+          className="hero"
+        >
           <div className="hero-content">
             <div className="eyebrow">
               <span className="status-dot" />
+
               Software · Systems · Security
             </div>
 
@@ -259,21 +209,31 @@ function App() {
             </h1>
 
             <p className="hero-description">
-              Estudante autodidata de Ciência da Computação interessado em
-              desenvolvimento de software, sistemas, redes e segurança.
+              Estudante autodidata de Ciência da Computação
+              interessado em desenvolvimento de software,
+              sistemas, redes e segurança.
             </p>
 
             <div className="hero-actions">
-              <a href="#projetos" className="button button-primary">
+              <a
+                href="#projetos"
+                className="button button-primary"
+              >
                 Ver projetos
                 <span>↗</span>
               </a>
 
-              <a href="#posts" className="button button-secondary">
+              <a
+                href="#posts"
+                className="button button-secondary"
+              >
                 Ler posts
               </a>
 
-              <a href="#sobre" className="button button-secondary">
+              <a
+                href="#sobre"
+                className="button button-secondary"
+              >
                 Sobre mim
               </a>
             </div>
@@ -290,8 +250,15 @@ function App() {
           </div>
         </section>
 
-        <section id="sobre" className="section about-section">
-          <div className="section-label">01 / SOBRE</div>
+        {/* SOBRE */}
+
+        <section
+          id="sobre"
+          className="section about-section"
+        >
+          <div className="section-label">
+            01 / SOBRE
+          </div>
 
           <div className="section-content">
             <h2>
@@ -302,18 +269,22 @@ function App() {
 
             <div className="about-text">
               <p>
-                Comecei a mexer com hacking e programação por volta dos 12 anos
-                e durante todo esse tempo tive contato com diversas linguagens
-                e tecnologias.
+                Comecei a mexer com hacking e programação por
+                volta dos 12 anos e durante todo esse tempo
+                tive contato com diversas linguagens e
+                tecnologias.
               </p>
 
               <p>
-                Desde então fico explorando sistemas, participando de CTFs,
-                estudando segurança e criando projetos para entender melhor
-                como as coisas funcionam.
+                Desde então fico explorando sistemas,
+                participando de CTFs, estudando segurança e
+                criando projetos para entender melhor como as
+                coisas funcionam.
               </p>
 
-              <p>Atualmente meus principais interesses são:</p>
+              <p>
+                Atualmente meus principais interesses são:
+              </p>
 
               <ul>
                 <li>CyberSecurity</li>
@@ -326,14 +297,23 @@ function App() {
           </div>
         </section>
 
-        <section id="projetos" className="section projects-section">
-          <div className="section-label">02 / PROJETOS</div>
+        {/* PROJETOS */}
+
+        <section
+          id="projetos"
+          className="section projects-section"
+        >
+          <div className="section-label">
+            02 / PROJETOS
+          </div>
 
           <div className="section-content">
             <div className="projects-header">
               <h2>Coisas que construí.</h2>
 
-              <span className="project-count">06 projetos</span>
+              <span className="project-count">
+                06 projetos
+              </span>
             </div>
 
             <div className="projects-grid">
@@ -388,8 +368,15 @@ function App() {
           </div>
         </section>
 
-        <section id="posts" className="section posts-section">
-          <div className="section-label">03 / POSTS</div>
+        {/* POSTS */}
+
+        <section
+          id="posts"
+          className="section posts-section"
+        >
+          <div className="section-label">
+            03 / POSTS
+          </div>
 
           <div className="section-content">
             <div className="posts-header">
@@ -397,14 +384,19 @@ function App() {
                 <h2>O que estou escrevendo.</h2>
 
                 <p className="posts-intro">
-                  Estudos, experiências e anotações sobre programação,
-                  sistemas, segurança e tecnologia.
+                  Estudos, experiências e anotações sobre
+                  programação, sistemas, segurança e
+                  tecnologia.
                 </p>
               </div>
 
               <span className="post-count">
-                {posts.length.toString().padStart(2, "0")}{" "}
-                {posts.length === 1 ? "post" : "posts"}
+                {posts.length
+                  .toString()
+                  .padStart(2, "0")}{" "}
+                {posts.length === 1
+                  ? "post"
+                  : "posts"}
               </span>
             </div>
 
@@ -413,15 +405,21 @@ function App() {
                 <PostCard
                   key={post.slug}
                   post={post}
-                  onOpen={() => openPost(post)}
                 />
               ))}
             </div>
           </div>
         </section>
 
-        <section id="links" className="section links-section">
-          <div className="section-label">04 / LINKS</div>
+        {/* LINKS */}
+
+        <section
+          id="links"
+          className="section links-section"
+        >
+          <div className="section-label">
+            04 / LINKS
+          </div>
 
           <div className="section-content">
             <h2>Encontre-me.</h2>
@@ -433,7 +431,9 @@ function App() {
                 rel="noreferrer"
               >
                 <span>Papers</span>
-                <span>joaostack.github.io ↗</span>
+                <span>
+                  joaostack.github.io ↗
+                </span>
               </a>
 
               <a
@@ -442,7 +442,9 @@ function App() {
                 rel="noreferrer"
               >
                 <span>GitHub</span>
-                <span>github.com/joaostack ↗</span>
+                <span>
+                  github.com/joaostack ↗
+                </span>
               </a>
 
               <a
@@ -451,37 +453,128 @@ function App() {
                 rel="noreferrer"
               >
                 <span>TryHackMe</span>
-                <span>tryhackme.com/p/joaostack ↗</span>
+                <span>
+                  tryhackme.com/p/joaostack ↗
+                </span>
               </a>
             </div>
           </div>
         </section>
       </main>
 
-      <footer id="contato" className="footer">
-        <div>
-          <span className="footer-label">GET IN TOUCH</span>
-
-          <h2>
-            Let's build
-            <br />
-            something.
-          </h2>
-        </div>
-
-        <a href="mailto:joaohcontato@proton.me" className="footer-email">
-          joaohcontato@proton.me
-          <span>↗</span>
-        </a>
-
-        <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} João Henryque</span>
-          <span>Computer Science · Software · Systems</span>
-        </div>
-      </footer>
-    </div>
+      <Footer />
+    </>
   );
 }
+
+/* =========================================================
+   POST PAGE
+========================================================= */
+
+function PostPage() {
+  const { slug } = useParams();
+  const post = slug ? getPostBySlug(slug) : undefined;
+
+  if (!post) {
+    return <NotFound />;
+  }
+
+  return (
+    <>
+      <main className="post-page">
+        <div className="post-page-inner">
+          <Link
+            to="/#posts"
+            className="post-back"
+          >
+            <span>←</span>
+            Voltar para os posts
+          </Link>
+
+          <header className="post-page-header">
+            <div className="post-page-meta">
+              <span>{post.date}</span>
+              <span>{post.category}</span>
+            </div>
+
+            <h1>{post.title}</h1>
+
+            <p>{post.description}</p>
+          </header>
+
+          <article className="post-article">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                a: ({ href, children, ...props }) => (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    {...props}
+                  >
+                    {children}
+                  </a>
+                ),
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
+          </article>
+
+          <div className="post-end">
+            <Link
+              to="/#posts"
+              className="post-back"
+            >
+              <span>←</span>
+              Voltar para os posts
+            </Link>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </>
+  );
+}
+
+/* =========================================================
+   POST CARD
+========================================================= */
+
+function PostCard({
+  post,
+}: {
+  post: Post;
+}) {
+  return (
+    <Link
+      to={`/posts/${post.slug}`}
+      className="post-card"
+    >
+      <div className="post-meta">
+        <span>{post.date}</span>
+        <span>{post.category}</span>
+      </div>
+
+      <div className="post-content">
+        <h3>{post.title}</h3>
+
+        <p>{post.description}</p>
+
+        <span className="post-open">
+          Read post
+          <span>↗</span>
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+/* =========================================================
+   PROJECT CARD
+========================================================= */
 
 function ProjectCard({
   number,
@@ -508,7 +601,11 @@ function ProjectCard({
 
         <p>{description}</p>
 
-        <a href={href} target="_blank" rel="noreferrer">
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+        >
           View repository
           <span>↗</span>
         </a>
@@ -517,25 +614,77 @@ function ProjectCard({
   );
 }
 
-function PostCard({ post, onOpen }: PostCardProps) {
+/* =========================================================
+   FOOTER
+========================================================= */
+
+function Footer() {
   return (
-    <article className="post-card">
-      <div className="post-meta">
-        <span>{post.date}</span>
-        <span>{post.category}</span>
+    <footer
+      id="contato"
+      className="footer"
+    >
+      <div>
+        <span className="footer-label">
+          GET IN TOUCH
+        </span>
+
+        <h2>
+          Let's build
+          <br />
+          something.
+        </h2>
       </div>
 
-      <div className="post-content">
-        <h3>{post.title}</h3>
+      <a
+        href="mailto:joaohcontato@proton.me"
+        className="footer-email"
+      >
+        joaohcontato@proton.me
+        <span>↗</span>
+      </a>
 
-        <p>{post.description}</p>
+      <div className="footer-bottom">
+        <span>
+          © {new Date().getFullYear()} João Henryque
+        </span>
 
-        <button className="post-open" onClick={onOpen}>
-          Read post
-          <span>↗</span>
-        </button>
+        <span>
+          Computer Science · Software · Systems
+        </span>
       </div>
-    </article>
+    </footer>
+  );
+}
+
+/* =========================================================
+   404
+========================================================= */
+
+function NotFound() {
+  return (
+    <main className="not-found">
+      <span className="section-label">
+        404
+      </span>
+
+      <h1>
+        Página não encontrada.
+      </h1>
+
+      <p>
+        O post ou página que você tentou acessar
+        não existe.
+      </p>
+
+      <Link
+        to="/"
+        className="button button-primary"
+      >
+        Voltar para o início
+        <span>↗</span>
+      </Link>
+    </main>
   );
 }
 
