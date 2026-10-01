@@ -10,7 +10,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { animate } from "animejs";
 
-import { getPostBySlug, posts } from "./lib/posts";
+import { getPostBySlug, posts, type Post } from "./lib/posts";
 import "./App.css";
 
 type Theme = "light" | "dark";
@@ -33,121 +33,60 @@ function App() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  return (
-    <Routes>
-      <Route
-        path="*"
-        element={
-          <Site
-            theme={theme}
-            setTheme={setTheme}
-          />
-        }
-      />
-    </Routes>
-  );
-}
-
-function Site({
-  theme,
-  setTheme,
-}: {
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}) {
-  const location = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
-
   const toggleTheme = () => {
-    setTheme((current) =>
-      current === "dark" ? "light" : "dark"
-    );
+    setTheme((current) => (current === "dark" ? "light" : "dark"));
   };
 
   return (
     <div className="page">
-      <Navbar
-        theme={theme}
-        onToggleTheme={toggleTheme}
-      />
+      <header className="navbar">
+        <div className="nav-inner">
+          <Link to="/" className="brand">
+            <span className="brand-mark">J</span>
+            <span>joaostack</span>
+          </Link>
 
-      <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-        />
+          <nav className="nav-links">
+            <a href="/#sobre">Sobre</a>
+            <a href="/#projetos">Projetos</a>
+            <a href="/#posts">Posts</a>
+            <a href="/#links">Links</a>
+            <a href="/#contato">Contato</a>
+          </nav>
 
-        <Route
-          path="/posts/:slug"
-          element={<PostPage />}
-        />
-
-        <Route
-          path="*"
-          element={<NotFound />}
-        />
-      </Routes>
-    </div>
-  );
-}
-
-/* =========================================================
-   NAVBAR
-========================================================= */
-
-function Navbar({
-  theme,
-  onToggleTheme,
-}: {
-  theme: Theme;
-  onToggleTheme: () => void;
-}) {
-  return (
-    <header className="navbar">
-      <div className="nav-inner">
-        <Link
-          to="/"
-          className="brand"
-        >
-          <span className="brand-mark">J</span>
-          <span>joaostack</span>
-        </Link>
-
-        <nav className="nav-links">
-          <a href="/#sobre">Sobre</a>
-          <a href="/#projetos">Projetos</a>
-          <a href="/#posts">Posts</a>
-          <a href="/#links">Links</a>
-          <a href="/#contato">Contato</a>
-        </nav>
-
-        <div className="nav-actions">
           <button
             className="theme-button"
-            onClick={onToggleTheme}
+            onClick={toggleTheme}
             aria-label="Alternar tema"
           >
             {theme === "dark" ? "☼" : "☾"}
           </button>
         </div>
-      </div>
-    </header>
+      </header>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/posts/:slug" element={<PostPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }
 
-/* =========================================================
-   HOME
-========================================================= */
-
 function Home() {
   useEffect(() => {
+    animate(".page", {
+      opacity: [0, 1],
+      translateY: [20, 0],
+      duration: 800,
+      easing: "easeOutCubic",
+    });
+
     animate(".hero-title", {
       opacity: [0, 1],
       translateY: [30, 0],
-      duration: 900,
+      duration: 1000,
+      delay: 150,
       easing: "easeOutCubic",
     });
 
@@ -155,31 +94,25 @@ function Home() {
       opacity: [0, 1],
       translateY: [20, 0],
       duration: 800,
-      delay: 150,
-      easing: "easeOutCubic",
-    });
-
-    animate(".hero-actions", {
-      opacity: [0, 1],
-      translateY: [15, 0],
-      duration: 700,
-      delay: 300,
+      delay: 350,
       easing: "easeOutCubic",
     });
 
     animate(".project-card", {
       opacity: [0, 1],
       translateY: [20, 0],
-      duration: 650,
-      delay: (_el, index) => 400 + index * 70,
+      duration: 700,
+      delay: (_el: HTMLElement, index: number) =>
+        450 + index * 80,
       easing: "easeOutCubic",
     });
 
     animate(".post-card", {
       opacity: [0, 1],
       translateY: [20, 0],
-      duration: 650,
-      delay: (_el, index) => 500 + index * 80,
+      duration: 700,
+      delay: (_el: HTMLElement, index: number) =>
+        500 + index * 80,
       easing: "easeOutCubic",
     });
   }, []);
@@ -187,16 +120,10 @@ function Home() {
   return (
     <>
       <main>
-        {/* HERO */}
-
-        <section
-          id="home"
-          className="hero"
-        >
+        <section id="home" className="hero">
           <div className="hero-content">
             <div className="eyebrow">
               <span className="status-dot" />
-
               Software · Systems · Security
             </div>
 
@@ -207,31 +134,17 @@ function Home() {
             </h1>
 
             <p className="hero-description">
-              Estudante autodidata de Ciência da Computação
-              interessado em desenvolvimento de software,
-              sistemas, redes e segurança.
+              Estudante autodidata de Ciência da Computação interessado em
+              desenvolvimento de software, sistemas, redes e segurança.
             </p>
 
             <div className="hero-actions">
-              <a
-                href="#projetos"
-                className="button button-primary"
-              >
+              <a href="#projetos" className="button button-primary">
                 Ver projetos
                 <span>↗</span>
               </a>
 
-              <a
-                href="#posts"
-                className="button button-secondary"
-              >
-                Ler posts
-              </a>
-
-              <a
-                href="#sobre"
-                className="button button-secondary"
-              >
+              <a href="#sobre" className="button button-secondary">
                 Sobre mim
               </a>
             </div>
@@ -248,15 +161,8 @@ function Home() {
           </div>
         </section>
 
-        {/* SOBRE */}
-
-        <section
-          id="sobre"
-          className="section about-section"
-        >
-          <div className="section-label">
-            01 / SOBRE
-          </div>
+        <section id="sobre" className="section about-section">
+          <div className="section-label">01 / SOBRE</div>
 
           <div className="section-content">
             <h2>
@@ -267,22 +173,18 @@ function Home() {
 
             <div className="about-text">
               <p>
-                Comecei a mexer com hacking e programação por
-                volta dos 12 anos e durante todo esse tempo
-                tive contato com diversas linguagens e
-                tecnologias.
+                Comecei a mexer com hacking e programação por volta dos 12
+                anos e durante todo esse tempo tive contato com diversas
+                linguagens e tecnologias.
               </p>
 
               <p>
-                Desde então fico explorando sistemas,
-                participando de CTFs, estudando segurança e
-                criando projetos para entender melhor como as
-                coisas funcionam.
+                Desde então fico explorando sistemas, participando de CTFs,
+                estudando segurança e criando projetos para entender melhor
+                como as coisas funcionam.
               </p>
 
-              <p>
-                Atualmente meus principais interesses são:
-              </p>
+              <p>Atualmente meus principais interesses são:</p>
 
               <ul>
                 <li>CyberSecurity</li>
@@ -295,23 +197,14 @@ function Home() {
           </div>
         </section>
 
-        {/* PROJETOS */}
-
-        <section
-          id="projetos"
-          className="section projects-section"
-        >
-          <div className="section-label">
-            02 / PROJETOS
-          </div>
+        <section id="projetos" className="section projects-section">
+          <div className="section-label">02 / PROJETOS</div>
 
           <div className="section-content">
             <div className="projects-header">
               <h2>Coisas que construí.</h2>
 
-              <span className="project-count">
-                06 projetos
-              </span>
+              <span className="project-count">06 projetos</span>
             </div>
 
             <div className="projects-grid">
@@ -366,58 +259,28 @@ function Home() {
           </div>
         </section>
 
-        {/* POSTS */}
-
-        <section
-          id="posts"
-          className="section posts-section"
-        >
-          <div className="section-label">
-            03 / POSTS
-          </div>
+        <section id="posts" className="section posts-section">
+          <div className="section-label">03 / POSTS</div>
 
           <div className="section-content">
-            <div className="posts-header">
-              <div>
-                <h2>O que estou escrevendo.</h2>
+            <div className="projects-header">
+              <h2>Escrevendo o que aprendo.</h2>
 
-                <p className="posts-intro">
-                  Estudos, experiências e anotações sobre
-                  programação, sistemas, segurança e
-                  tecnologia.
-                </p>
-              </div>
-
-              <span className="post-count">
-                {posts.length
-                  .toString()
-                  .padStart(2, "0")}{" "}
-                {posts.length === 1
-                  ? "post"
-                  : "posts"}
+              <span className="project-count">
+                {posts.length} posts
               </span>
             </div>
 
             <div className="posts-list">
               {posts.map((post) => (
-                <PostCard
-                  key={post.slug}
-                  post={post}
-                />
+                <PostCard key={post.slug} post={post} />
               ))}
             </div>
           </div>
         </section>
 
-        {/* LINKS */}
-
-        <section
-          id="links"
-          className="section links-section"
-        >
-          <div className="section-label">
-            04 / LINKS
-          </div>
+        <section id="links" className="section links-section">
+          <div className="section-label">04 / LINKS</div>
 
           <div className="section-content">
             <h2>Encontre-me.</h2>
@@ -429,9 +292,7 @@ function Home() {
                 rel="noreferrer"
               >
                 <span>Papers</span>
-                <span>
-                  joaostack.github.io ↗
-                </span>
+                <span>joaostack.github.io ↗</span>
               </a>
 
               <a
@@ -440,9 +301,7 @@ function Home() {
                 rel="noreferrer"
               >
                 <span>GitHub</span>
-                <span>
-                  github.com/joaostack ↗
-                </span>
+                <span>github.com/joaostack ↗</span>
               </a>
 
               <a
@@ -451,9 +310,7 @@ function Home() {
                 rel="noreferrer"
               >
                 <span>TryHackMe</span>
-                <span>
-                  tryhackme.com/p/joaostack ↗
-                </span>
+                <span>tryhackme.com/p/joaostack ↗</span>
               </a>
             </div>
           </div>
@@ -465,13 +322,43 @@ function Home() {
   );
 }
 
-/* =========================================================
-   POST PAGE
-========================================================= */
+function PostCard({ post }: { post: Post }) {
+  return (
+    <Link
+      to={`/posts/${post.slug}`}
+      className="post-card"
+    >
+      <div className="post-card-top">
+        <span>{post.category}</span>
+        <span>{post.date}</span>
+      </div>
+
+      <div className="post-card-body">
+        <h3>{post.title}</h3>
+
+        <p>{post.description}</p>
+
+        <span className="post-read">
+          Ler artigo
+          <span>↗</span>
+        </span>
+      </div>
+    </Link>
+  );
+}
 
 function PostPage() {
-  const { slug } = useParams();
+  const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
+
   const post = slug ? getPostBySlug(slug) : undefined;
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  }, [location.pathname]);
 
   if (!post) {
     return <NotFound />;
@@ -480,36 +367,36 @@ function PostPage() {
   return (
     <>
       <main className="post-page">
-        <div className="post-page-inner">
-          <Link
-            to="/#posts"
-            className="post-back"
-          >
-            <span>←</span>
-            Voltar para os posts
+        <article className="post-article">
+          <Link to="/" className="back-link">
+            ← Voltar
           </Link>
 
-          <header className="post-page-header">
-            <div className="post-page-meta">
-              <span>{post.date}</span>
+          <header className="post-header">
+            <div className="post-meta">
               <span>{post.category}</span>
+              <span>{post.date}</span>
             </div>
 
             <h1>{post.title}</h1>
 
-            <p>{post.description}</p>
+            <p className="post-description">
+              {post.description}
+            </p>
           </header>
 
-          <article className="post-article">
+          <div className="post-content">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
-                a: ({ href, children, ...props }) => (
+                a: ({
+                  href,
+                  children,
+                }) => (
                   <a
                     href={href}
                     target="_blank"
                     rel="noreferrer"
-                    {...props}
                   >
                     {children}
                   </a>
@@ -518,18 +405,8 @@ function PostPage() {
             >
               {post.content}
             </ReactMarkdown>
-          </article>
-
-          <div className="post-end">
-            <Link
-              to="/#posts"
-              className="post-back"
-            >
-              <span>←</span>
-              Voltar para os posts
-            </Link>
           </div>
-        </div>
+        </article>
       </main>
 
       <Footer />
@@ -537,42 +414,28 @@ function PostPage() {
   );
 }
 
-/* =========================================================
-   POST CARD
-========================================================= */
-
-function PostCard({
-  post,
-}: {
-  post: Post;
-}) {
+function NotFound() {
   return (
-    <Link
-      to={`/posts/${post.slug}`}
-      className="post-card"
-    >
-      <div className="post-meta">
-        <span>{post.date}</span>
-        <span>{post.category}</span>
-      </div>
+    <>
+      <main className="not-found">
+        <span className="section-label">404</span>
 
-      <div className="post-content">
-        <h3>{post.title}</h3>
+        <h1>Página não encontrada.</h1>
 
-        <p>{post.description}</p>
+        <p>
+          O conteúdo que você tentou acessar não existe.
+        </p>
 
-        <span className="post-open">
-          Read post
+        <Link to="/" className="button button-primary">
+          Voltar para o início
           <span>↗</span>
-        </span>
-      </div>
-    </Link>
+        </Link>
+      </main>
+
+      <Footer />
+    </>
   );
 }
-
-/* =========================================================
-   PROJECT CARD
-========================================================= */
 
 function ProjectCard({
   number,
@@ -612,20 +475,11 @@ function ProjectCard({
   );
 }
 
-/* =========================================================
-   FOOTER
-========================================================= */
-
 function Footer() {
   return (
-    <footer
-      id="contato"
-      className="footer"
-    >
+    <footer id="contato" className="footer">
       <div>
-        <span className="footer-label">
-          GET IN TOUCH
-        </span>
+        <span className="footer-label">GET IN TOUCH</span>
 
         <h2>
           Let's build
@@ -652,37 +506,6 @@ function Footer() {
         </span>
       </div>
     </footer>
-  );
-}
-
-/* =========================================================
-   404
-========================================================= */
-
-function NotFound() {
-  return (
-    <main className="not-found">
-      <span className="section-label">
-        404
-      </span>
-
-      <h1>
-        Página não encontrada.
-      </h1>
-
-      <p>
-        O post ou página que você tentou acessar
-        não existe.
-      </p>
-
-      <Link
-        to="/"
-        className="button button-primary"
-      >
-        Voltar para o início
-        <span>↗</span>
-      </Link>
-    </main>
   );
 }
 
