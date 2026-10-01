@@ -7,7 +7,6 @@ import {
   Route,
   Routes,
   useLocation,
-  useNavigate,
   useParams,
 } from "react-router-dom";
 
@@ -105,8 +104,6 @@ function Navbar({
   theme: Theme;
   onToggleTheme: () => void;
 }) {
-  const navigate = useNavigate();
-
   return (
     <header className="navbar">
       <div className="nav-inner">
