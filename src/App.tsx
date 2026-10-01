@@ -4,15 +4,14 @@ import {
   Route,
   Routes,
   useLocation,
+  useParams,
 } from "react-router-dom";
-
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { animate } from "animejs";
 
 import { getPostBySlug, posts } from "./lib/posts";
 import "./App.css";
-
-import { getPostBySlug, posts, type Post } from "./lib/posts";
 
 type Theme = "light" | "dark";
 
