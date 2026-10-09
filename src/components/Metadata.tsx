@@ -1,4 +1,4 @@
-import { useLocation, useEffect } from "react";
+import { useEffect } from "react";
 
 type OpenGraph = {
   title?: string;

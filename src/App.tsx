@@ -6,7 +6,7 @@ import { animate } from "animejs";
 
 import { getPostBySlug, posts, type Post } from "./lib/posts";
 import "./App.css";
-import Metadata from "./components/Metadata";
+import { Metadata } from "./components/Metadata";
 
 type Theme = "dark" | "light";
 
