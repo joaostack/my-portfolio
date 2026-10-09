@@ -27,23 +27,24 @@ function App() {
   const toggleTheme = () => setTheme((c) => (c === "dark" ? "light" : "dark"));
 
   return (
-    <Metadata
-      title="João H. | joaostack"
-      description="João Henryque - Software · Systems · Security Portfolio - Pelotas, RS"
-      og={{
-        title: "João Henryque - Portfolio",
-        description: "João Henryque - Software · Systems · Security Portfolio - Pelotas, RS",
-        type: "website",
-        images: ["https://joaostack.github.io/og-image.jpg"],
-      }}
-      twitter={{
-        card: "summary_large_image",
-        title: "João Henryque - Portfolio",
-        description: "João Henryque - Software · Systems · Security Portfolio - Pelotas, RS",
-        site: "@joaostack",
-        images: ["https://joaostack.github.io/og-image.jpg"],
-      }}
-    />
+    <>
+      <Metadata
+        title="João H. | joaostack"
+        description="João Henryque - Software · Systems · Security Portfolio - Pelotas, RS"
+        og={{
+          title: "João Henryque - Portfolio",
+          description: "João Henryque - Software · Systems · Security Portfolio - Pelotas, RS",
+          type: "website",
+          images: ["https://joaostack.github.io/og-image.jpg"],
+        }}
+        twitter={{
+          card: "summary_large_image",
+          title: "João Henryque - Portfolio",
+          description: "João Henryque - Software · Systems · Security Portfolio - Pelotas, RS",
+          site: "@joaostack",
+          images: ["https://joaostack.github.io/og-image.jpg"],
+        }}
+      />
       <div className="terminal">
       <header className="terminal-header">
         <div className="terminal-bar">
@@ -113,6 +114,7 @@ function App() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
 
