@@ -6,6 +6,7 @@ import { animate } from "animejs";
 
 import { getPostBySlug, posts, type Post } from "./lib/posts";
 import "./App.css";
+import Metadata from "./components/Metadata";
 
 type Theme = "dark" | "light";
 
@@ -26,7 +27,24 @@ function App() {
   const toggleTheme = () => setTheme((c) => (c === "dark" ? "light" : "dark"));
 
   return (
-    <div className="terminal">
+    <Metadata
+      title="João H. | joaostack"
+      description="João Henryque - Software · Systems · Security Portfolio - Pelotas, RS"
+      og={{
+        title: "João Henryque - Portfolio",
+        description: "João Henryque - Software · Systems · Security Portfolio - Pelotas, RS",
+        type: "website",
+        images: ["https://joaostack.github.io/og-image.jpg"],
+      }}
+      twitter={{
+        card: "summary_large_image",
+        title: "João Henryque - Portfolio",
+        description: "João Henryque - Software · Systems · Security Portfolio - Pelotas, RS",
+        site: "@joaostack",
+        images: ["https://joaostack.github.io/og-image.jpg"],
+      }}
+    />
+      <div className="terminal">
       <header className="terminal-header">
         <div className="terminal-bar">
           <div className="terminal-controls">
@@ -444,8 +462,30 @@ function PostPage() {
 
   if (!post) return <NotFound />;
 
+  const postUrl = `https://joaostack.github.io/posts/${post.slug}`;
+
   return (
     <>
+      <Metadata
+        title={`${post.title} | João H.`}
+        description={post.description}
+        og={{
+          title: post.title,
+          description: post.description,
+          type: "article",
+          url: postUrl,
+          site_name: "João Henryque",
+          locale: "pt_BR",
+          images: ["https://joaostack.github.io/og-image.jpg"],
+        }}
+        twitter={{
+          card: "summary_large_image",
+          title: post.title,
+          description: post.description,
+          site: "@joaostack",
+          images: ["https://joaostack.github.io/og-image.jpg"],
+        }}
+      />
       <article className="post-page section">
         <Link to="/" className="back-link">
           <span className="prompt">joaostack@portfolio:~$</span>
@@ -521,6 +561,26 @@ function PostPage() {
 function NotFound() {
   return (
     <>
+      <Metadata
+        title="404 - Página Não Encontrada | João H."
+        description="Página não encontrada - João Henryque Portfolio"
+        og={{
+          title: "404 - Página Não Encontrada",
+          description: "Página não encontrada - João Henryque Portfolio",
+          type: "website",
+          url: "https://joaostack.github.io/404",
+          site_name: "João Henryque",
+          locale: "pt_BR",
+          images: ["https://joaostack.github.io/og-image.jpg"],
+        }}
+        twitter={{
+          card: "summary",
+          title: "404 - Página Não Encontrada",
+          description: "Página não encontrada - João Henryque Portfolio",
+          site: "@joaostack",
+          images: ["https://joaostack.github.io/og-image.jpg"],
+        }}
+      />
       <section className="not-found section">
         <div className="error-container">
           <span className="error-code">404</span>

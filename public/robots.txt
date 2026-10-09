@@ -1,0 +1,11 @@
+# Robots.txt for joaostack.github.io
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://joaostack.github.io/sitemap.xml
+
+# Disallow admin/private paths (if any)
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /.git/
