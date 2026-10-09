@@ -1,73 +1,104 @@
 <!DOCTYPE html>
-<html data-theme="dark" lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="João Henryque - Software · Systems · Security Portfolio - Pelotas, RS" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="João Henryque - Portfolio" />
-    <meta property="og:description" content="João Henryque - Software · Systems · Security Portfolio - Pelotas, RS" />
+
+    <!-- Primary SEO -->
+    <title>João H. | joaostack</title>
+    <meta
+      name="description"
+      content="João Henryque — Software, Systems & Security. Estudante autodidata de Ciência da Computação, desenvolvedor de software e pesquisador de segurança em Pelotas, RS."
+    />
+    <meta name="author" content="João Henryque" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0f0a" />
+
+    <link rel="canonical" href="https://joaostack.github.io/" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+
+    <!-- Open Graph / Facebook / Discord / WhatsApp -->
     <meta property="og:type" content="website" />
+    <meta property="og:title" content="João Henryque — Portfolio" />
+    <meta
+      property="og:description"
+      content="Software, Systems & Security. Building to understand."
+    />
     <meta property="og:url" content="https://joaostack.github.io/" />
     <meta property="og:site_name" content="João Henryque" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:city" content="Pelotas" />
-    <meta property="og:region" content="RS" />
-    <meta property="og:country" content="Brazil" />
-    <meta property="og:latitude" content="-31.7731" />
-    <meta property="og:longitude" content="-52.3428" />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="João Henryque - Portfolio" />
-    <meta property="twitter:description" content="João Henryque - Software · Systems · Security Portfolio - Pelotas, RS" />
-    <meta property="twitter:site" content="@joaostack" />
-    
-    <meta name="theme-color" content="#0a0f0a" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fdf6e3" media="(prefers-color-scheme: light)" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="manifest" href="/manifest.json" />
-    <title>João H. | joaostack</title>
-    
-    <!-- JSON-LD Structured Data -->
+
+    <!-- Social sharing image: create this file before using it -->
+    <meta
+      property="og:image"
+      content="https://joaostack.github.io/og-image.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="João Henryque — Software, Systems & Security"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="João Henryque — Portfolio" />
+    <meta
+      name="twitter:description"
+      content="Software, Systems & Security. Building to understand."
+    />
+    <meta name="twitter:site" content="@joaostack" />
+    <meta
+      name="twitter:image"
+      content="https://joaostack.github.io/og-image.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="João Henryque — Software, Systems & Security"
+    />
+
+    <!-- Structured Data: Schema.org -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "João Henryque",
-      "url": "https://joaostack.github.io/",
-      "sameAs": [
-        "https://github.com/joaostack",
-        "https://tryhackme.com/p/joaostack",
-        "https://joaostack.github.io/"
-      ],
-      "jobTitle": "Software Developer · Security Researcher",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Self-employed / Student"
-      },
-      "knowsAbout": [
-        "CyberSecurity",
-        "Computer Networks",
-        "Backend Development",
-        "Linux Systems",
-        "Computer Science Fundamentals",
-        "C#",
-        "CTF"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Pelotas",
-        "addressRegion": "RS",
-        "addressCountry": "BR"
-      },
-      "description": "João Henryque - Software · Systems · Security Portfolio. Self-taught CS student from Pelotas, RS. Building to understand."
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "João Henryque",
+        "url": "https://joaostack.github.io/",
+        "sameAs": [
+          "https://github.com/joaostack",
+          "https://tryhackme.com/p/joaostack"
+        ],
+        "jobTitle": "Software Developer and Security Researcher",
+        "knowsAbout": [
+          "Cybersecurity",
+          "Computer Networks",
+          "Backend Development",
+          "Linux Systems",
+          "Computer Science Fundamentals",
+          "C#",
+          "Capture the Flag (CTF)"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Pelotas",
+          "addressRegion": "Rio Grande do Sul",
+          "addressCountry": "BR"
+        },
+        "description": "Self-taught computer science student from Pelotas, RS, interested in software development, systems and cybersecurity. Building to understand."
+      }
     </script>
+
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
