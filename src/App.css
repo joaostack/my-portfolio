@@ -9,11 +9,12 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 
 /* Retro terminal / phosphor display */
-:root{font-family:'IBM Plex Mono',monospace;--mono:'IBM Plex Mono',monospace;--serif:'VT323',monospace;--accent:#62ff75;--bg:#050b07;--surface:#09140c;--fg:#d1f5d4;--muted:#719778;--line:#183820;--faint:#a6d9ac;color-scheme:dark}
-:root[data-theme="light"]{--bg:#e4f3e5;--surface:#d7ebd9;--fg:#122c18;--muted:#456e4d;--line:#b4d3b8;--faint:#2d5936;color-scheme:light}
+:root{font-family:'IBM Plex Mono',monospace;--mono:'IBM Plex Mono',monospace;--serif:'VT323',monospace;--accent:#62ff75;--bg:#050b07;--surface:#09140c;--fg:#d1f5d4;--muted:#719778;--line:#183820;--faint:#a6d9ac;--scanlines:rgba(80,255,110,.025);--vignette:rgba(0,0,0,.25);color-scheme:dark}
+:root[data-theme="light"]{--bg:#f2f5ec;--surface:#e8eee1;--fg:#1b2c1d;--muted:#536a55;--line:#c7d2c1;--faint:#344e37;--accent:#26733a;--scanlines:rgba(27,75,35,.018);--vignette:rgba(16,38,18,.035);color-scheme:light}
+:root[data-theme="light"] .hero h1 em,:root[data-theme="light"] .intro h2 em,:root[data-theme="light"] .projects-heading h2 em,:root[data-theme="light"] .writing-heading h2 em{text-shadow:none}
 body{font-family:var(--mono);background-image:linear-gradient(rgba(20,75,34,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(20,75,34,.055) 1px,transparent 1px);background-size:32px 32px}
-.site-shell::before{content:"";position:fixed;inset:0;z-index:8;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(80,255,110,.025) 3px 4px);opacity:.6}
-.site-shell::after{content:"";position:fixed;inset:0;z-index:7;pointer-events:none;background:radial-gradient(ellipse at center,transparent 48%,rgba(0,0,0,.25) 100%)}
+.site-shell::before{content:"";position:fixed;inset:0;z-index:8;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 3px,var(--scanlines) 3px 4px);opacity:.6}
+.site-shell::after{content:"";position:fixed;inset:0;z-index:7;pointer-events:none;background:radial-gradient(ellipse at center,transparent 48%,var(--vignette) 100%)}
 .topbar{background:color-mix(in srgb,var(--bg) 94%,transparent);border-bottom-style:dashed}
 .wordmark{font:24px var(--mono);letter-spacing:-1.7px;color:var(--fg)}.wordmark span{color:var(--accent)}.topbar nav{font:12px var(--mono);gap:22px}.topbar nav a{color:var(--muted)}
 .theme-button{border-radius:2px;color:var(--accent);font-family:var(--mono)}
