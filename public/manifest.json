@@ -1,11 +1,11 @@
 {
   "name": "João Henryque - Portfolio",
   "short_name": "joaostack",
-  "description": "João Henryque - Software · Systems · Security Portfolio - Pelotas, RS",
+  "description": "João Henryque explora software, sistemas e segurança em Pelotas, RS.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0f0a",
-  "theme_color": "#0a0f0a",
+  "background_color": "#10120e",
+  "theme_color": "#10120e",
   "orientation": "portrait-primary",
   "icons": [
     {

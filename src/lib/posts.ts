@@ -3,6 +3,7 @@ export type Post = {
   title: string;
   date: string;
   category: string;
+  subtitle: string;
   description: string;
   content: string;
 };
@@ -23,8 +24,10 @@ function parseFrontmatter(raw: string) {
 
   if (!match) {
     return {
-      metadata: {},
+      metadata: {} as Record<string, string>,
       content: raw,
+      subtitle: "",
+      description: "",
     };
   }
 
@@ -48,6 +51,8 @@ function parseFrontmatter(raw: string) {
   return {
     metadata,
     content,
+    subtitle: metadata.subtitle ?? "",
+    description: metadata.description ?? "",
   };
 }
 
@@ -60,14 +65,15 @@ function slugFromPath(path: string) {
 
 export const posts: Post[] = Object.entries(files)
   .map(([path, raw]) => {
-    const { metadata, content } = parseFrontmatter(raw);
+    const { metadata, content, subtitle, description } = parseFrontmatter(raw);
 
     return {
       slug: slugFromPath(path),
       title: metadata.title ?? "Sem título",
       date: metadata.date ?? "",
       category: metadata.category ?? "POST",
-      description: metadata.description ?? "",
+      subtitle,
+      description,
       content,
     };
   })
