@@ -3,7 +3,7 @@
 Arquivo de referência com os textos preservados antes da reconstrução da interface.
 
 ## Identidade
-- João Henryque — joaostack
+- João Henryque Mello Falcão — joaostack
 - Software · Systems · Security
 - Estudante autodidata de Ciência da Computação, de Pelotas, RS
 - Curiosidade primeiro. Abstrações depois.
@@ -26,6 +26,7 @@ Interesses: CyberSecurity; Redes de Computadores; Desenvolvimento Back-End; Sist
 ## Links
 - Papers: https://joaostack.github.io/
 - GitHub: https://github.com/joaostack
+- LinkedIn: https://www.linkedin.com/in/joaostack/
 - TryHackMe: https://tryhackme.com/p/joaostack
 - Contato: joaohcontato@proton.me
 
